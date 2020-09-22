@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--包扫描-->
+    <context:component-scan base-package="top.zhuchl.spring" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+    </context:component-scan>
+
+    <!--开启代理对象自动生成-->
+    <aop:aspectj-autoproxy/>
+
+    <!--创建切面bean-->
+    <bean id="loginPlusService" class="top.zhuchl.spring.aspect.LoginPlusService"/>
+
+    <!--AOP配置-->
+    <aop:config>
+        <aop:pointcut id="pointCutLogin" expression="execution(* top.zhuchl.spring.service.LoginService.loginIn(String,String))" />
+        <aop:aspect id="loginAspect" ref="loginPlusService">
+            <aop:before method="beforeLogin" pointcut-ref="pointCutLogin"/>
+            <aop:after method="afterLogin" pointcut-ref="pointCutLogin"/>
+            <!--返回通知，returning属性值与方法afterReturn参数名称对应-->
+            <aop:after-returning method="afterReturn" pointcut-ref="pointCutLogin" returning="res"/>
+            <!--异通知，throwing属性值与方法afterException参数名称对应-->
+            <aop:after-throwing method="afterException" pointcut-ref="pointCutLogin" throwing="throwable"/>
+            <aop:around method="aroundLogin" pointcut-ref="pointCutLogin"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--
+        resource-pattern的值在base-package的基础上取需要扫描的组件，例如：
+        -repository
+            -impl
+                -UserRepository.java
+        -spring.test.service
+            -impl
+                -TestService1.java
+        只想扫描service下的impl子包中的类
+    -->
+    <context:component-scan base-package="top.zhuchl.spring.service,top.zhuchl.spring.repository"
+                           use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+
+    <!--外部配置文件-->
+    <context:property-placeholder location="classpath*:config/properties/*"/>
+
+    <bean id="user1" class="top.zhuchl.spring.entity.UserEntity" init-method="initBean" destroy-method="destroyBean">
+        <property name="email" value="${test.email}"/>
+        <property name="username" value="${test.username}"/>
+        <property name="sal" value="#{T(java.lang.Math).PI*2*1000}"/>
+     </bean>
+
+    <bean id="user2" class="top.zhuchl.spring.entity.UserEntity" parent="user1">
+        <property name="username" value="user2"/>
+    </bean>
+
+</beans>

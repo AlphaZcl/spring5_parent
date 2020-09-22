@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启包扫描-->
+    <context:component-scan base-package="top.zhuchl.spring"/>
+
+    <!--外部配置文件-->
+    <context:property-placeholder location="classpath*:config/properties/*"/>
+
+    <!--静态工厂获取bean-->
+    <bean id="user1" class="top.zhuchl.spring.factory.BeanStaticFactory" factory-method="getBean" init-method="">
+        <constructor-arg name="username" value="${test.username}"/>
+        <constructor-arg name="email" value="${test.email}"/>
+        <constructor-arg name="sal" value="${test.sal}" />
+    </bean>
+
+    <!--实例工厂获取bean-->
+    <bean id="beanFactoryUtils" class="top.zhuchl.spring.factory.BeanFactoryUtils"
+          init-method="initFactory" destroy-method="destroyFactory"/>
+    <bean id="user2" class="top.zhuchl.spring.entity.UserEntity"
+          factory-bean="beanFactoryUtils" factory-method="getBean">
+        <constructor-arg name="username" value="user2"/>
+        <constructor-arg name="email" value="${test.email}"/>
+    </bean>
+
+    <!--实现FactoryBean接口获取实例-->
+    <bean id="user3" class="top.zhuchl.spring.factory.FactoryBeanImpl"/>
+    
+    <!--bean之间的继承-->
+    <bean id="userParent" class="top.zhuchl.spring.entity.UserEntity" abstract="true">
+        <property name="email" value="${test.email}"/>
+    </bean>
+    <bean id="subUser1" parent="userParent" class="top.zhuchl.spring.entity.UserEntity"
+          init-method="initBean" destroy-method="destroyBean">
+        <property name="username" value="subUser1"/>
+        <property name="sal" value="#{T(java.lang.Math).PI*20}"/>
+    </bean>
+    <bean id="subUser2" parent="subUser1" class="top.zhuchl.spring.entity.UserEntity" >
+        <property name="username" value="subUser2"/>
+    </bean>
+
+    <!--bean之间的依赖-->
+    <bean id="userDepend1" class="top.zhuchl.spring.factory.FactoryBeanImpl" depends-on="user1,user2"/>
+
+    <!--bean后置处理器-->
+    <!--<bean id="processor1" class="top.zhuchl.spring.processor.MyPostProcessor"/>-->
+
+</beans>
