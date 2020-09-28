@@ -11,6 +11,8 @@
         <module>spring_demo_Ioc</module>
         <module>spring_demo_AOP</module>
         <module>spring_demo_JdbcTemplate</module>
+        <module>spring_demo_web_helloworld</module>
+        <module>spring_demo_transaction</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -152,6 +154,18 @@
             <version>${top.zhuhcl.log4j.version}</version>
         </dependency>
         <!--日志框架log4j2 依赖结束-->
+
+        <!--数据库连接池-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.9</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.8</version>
+        </dependency>
 
 
 
