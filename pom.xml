@@ -23,6 +23,10 @@
         <top.zhuchl.junit.version>4.12</top.zhuchl.junit.version>
         <!--日志框架log4j 依赖版本号-->
         <top.zhuhcl.log4j.version>2.11.2</top.zhuhcl.log4j.version>
+        <!--数据库管理连接池版本号-->
+        <top.zhuchl.druid.version>1.1.9</top.zhuchl.druid.version>
+        <!--MySQL数据库驱动版本号-->
+        <top.zhuchl.MySqlDriver.version>5.1.8</top.zhuchl.MySqlDriver.version>
     </properties>
 
     <dependencies>
@@ -159,12 +163,12 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.1.9</version>
+            <version>${top.zhuchl.druid.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.8</version>
+            <version>${top.zhuchl.MySqlDriver.version}</version>
         </dependency>
 
 
