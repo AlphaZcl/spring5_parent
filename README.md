@@ -1,0 +1,3 @@
+# spring5_parent
+20201103 首次提交，包含父项目：spring5_parent，
+子模块：spring_demo_AOP,spring_demo_Ioc,spring_demo_JdbcTemplate,spring_demo_transaction,spring_demo_web_helloworld
