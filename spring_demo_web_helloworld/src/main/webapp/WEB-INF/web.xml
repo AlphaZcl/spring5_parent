@@ -1,0 +1,24 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <!--配置DispatcherServlet前端控制器-->
+  <servlet>
+    <servlet-name>SpringMVC</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <!--contextConfigLocation:指定SpringMVC配置文件位置-->
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:config/spring/*</param-value>
+    </init-param>
+    <!--servlet启动加载，servlet原本是第一次访问创建对象，
+    load-on-startup,服务器启动的时候创建对象，值越小，优先级越高-->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SpringMVC</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
