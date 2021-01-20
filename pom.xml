@@ -13,16 +13,24 @@
         <module>spring_demo_JdbcTemplate</module>
         <module>spring_demo_web_helloworld</module>
         <module>spring_demo_transaction</module>
+        <module>spring_demo_web_RESTfulDemo</module>
+        <module>spring_demo_web_responseDemo</module>
+        <module>spring_demo_web_InterceptorDemo</module>
+        <module>spring_demo_web_JstlViewDemo</module>
     </modules>
     <packaging>pom</packaging>
 
     <properties>
+        <!--javax扩展包servlet版本号-->
+        <top.zhuchl.javax.servlet.version>3.1.0</top.zhuchl.javax.servlet.version>
         <!--spring5 依赖版本号-->
         <top.zhuchl.spring.version>5.2.6.RELEASE</top.zhuchl.spring.version>
         <!--单元测试junit 依赖版本号-->
         <top.zhuchl.junit.version>4.12</top.zhuchl.junit.version>
         <!--日志框架log4j 依赖版本号-->
         <top.zhuhcl.log4j.version>2.11.2</top.zhuhcl.log4j.version>
+        <!--日志框架web包-->
+        <top.zhuchl.log4j.web.version>2.9.1</top.zhuchl.log4j.web.version>
         <!--数据库管理连接池版本号-->
         <top.zhuchl.druid.version>1.1.9</top.zhuchl.druid.version>
         <!--MySQL数据库驱动版本号-->
@@ -30,6 +38,14 @@
     </properties>
 
     <dependencies>
+        <!--javax.servlet-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${top.zhuchl.javax.servlet.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!--spring5 依赖开始-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -151,6 +167,11 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${top.zhuhcl.log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-web</artifactId>
+            <version>${top.zhuchl.log4j.web.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

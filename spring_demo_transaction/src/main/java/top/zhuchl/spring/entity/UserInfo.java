@@ -3,7 +3,6 @@ package top.zhuchl.spring.entity;
 import java.math.BigDecimal;
 
 /**
- * TODO
  *
  * @author zclys
  * @date 2020/9/23 10:17
