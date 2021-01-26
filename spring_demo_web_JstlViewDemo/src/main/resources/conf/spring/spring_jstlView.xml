@@ -9,12 +9,27 @@
 
     <!--<context:property-placeholder location="conf/properties/*"/>-->
 
-    <!--视图解析器-->
+    <!--视图解析器,因为会拦截所有视图不会反悔null，必须放在最后执行-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
+        <!--指定view类型，国际化需要JstlView类型-->
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <!--解析器优先级，值越小优先级越高-->
+        <property name="order" value="100"/>
     </bean>
+
+    <!--根据视图名解析的Bean解析器-->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="10"/>
+     </bean>
+
+    <!--自定义视图解析器-->
+    <bean class="top.zhuchl.springmvc.resolver.CustViewResolver">
+        <property name="order" value="20"/>
+    </bean>
+
+
 
     <!--管理国际化资源文件-->
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -28,6 +43,6 @@
     -->
     <mvc:view-controller path="web/MsgService/toPage" view-name="testMsg"/>
 
-    <!--启动注解驱动-->
+    <!--启动注解驱动,如果没有这个驱动配置，那么起作用的只有view-controller配置的路径，Controller中路径的会报404-->
     <mvc:annotation-driven/>
 </beans>

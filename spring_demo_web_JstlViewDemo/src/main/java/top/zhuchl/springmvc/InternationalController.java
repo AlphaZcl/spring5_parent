@@ -37,4 +37,19 @@ public class InternationalController {
         String json = "{\"message\":\""+message+"\"}";
         return json;
     }
+
+    @RequestMapping("views")
+    public String testView(){
+        return "myView";
+    }
+
+    @RequestMapping("views2")
+    public String testView2(){
+        return "custView";
+    }
+
+    @RequestMapping("views3")
+    public String testView3(){
+        return "cust:custView22";
+    }
 }
