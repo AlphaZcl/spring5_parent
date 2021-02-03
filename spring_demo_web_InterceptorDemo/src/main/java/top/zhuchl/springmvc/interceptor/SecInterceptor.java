@@ -9,29 +9,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- *
  * @author zclys
- * @date 2020/12/17 15:01
+ * @date 2021/2/3 15:50
  */
-public class FirInterceptor implements HandlerInterceptor {
+public class SecInterceptor implements HandlerInterceptor {
 
-    private static final Logger logger = LoggerFactory.getLogger(FirInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(SecInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object param = request.getParameter("param1");
-        logger.info("----FirInterceptor.preHandle:param:{}----",param);
+        logger.info("----SecInterceptor.preHandle:param:{}----",param);
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        logger.info("-----FirInterceptor.postHandle-----");
+        logger.info("-----SecInterceptor.postHandle-----");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        logger.info("-----FirInterceptor.afterCompletion-----");
+        logger.info("-----SecInterceptor.afterCompletion-----");
     }
 }

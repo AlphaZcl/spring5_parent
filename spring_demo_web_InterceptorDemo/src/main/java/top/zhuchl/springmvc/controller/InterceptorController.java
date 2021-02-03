@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 
@@ -14,16 +16,15 @@ import java.util.Map;
  * @date 2020/12/17 11:55
  */
 @Controller
-@RequestMapping("spring_demo_web_InerceptorDemo")
+@RequestMapping("web/InterceptorDemo")
 public class InterceptorController {
 
     private static  final Logger logger = LoggerFactory.getLogger(InterceptorController.class);
 
-
     @RequestMapping("test1")
-    public String test1(Map<String, Object> map){
-        map.put("param1","11111");
-        logger.info("---------InterceptorController.test1");
+    public String testInterceptor1(@RequestParam(value = "param1",required = false) String p1,
+                        @RequestParam(value = "param2",required = false)String p2){
+        logger.info("handler对应的处理方法：InterceptorController.testInterceptor1");
         return "success";
     }
 }
