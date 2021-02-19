@@ -3,8 +3,10 @@ package top.zhuchl.spring.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,8 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import top.zhuchl.spring.service.GetFileService;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -23,26 +27,12 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("web/file")
-public class FileUpController {
+public class FileController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileUpController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @Autowired
     private GetFileService fileService;
-
-    @ModelAttribute
-    public void globalFunBefore(ModelAndView mv) {
-        logger.info("-----global_before，前置处理------");
-        Map<String, Object> resMap = new HashMap<>();
-        Map<String, Object> head = new HashMap<>();
-        head.put("jnl", "123456789");
-        head.put("SvrCod", "000001");
-        head.put("MsgID", "123456789");
-        resMap.put("head", head);
-        Map<String, Object> body = new HashMap<>();
-        resMap.put("body", body);
-        mv.addAllObjects(resMap);
-    }
 
     /**
      * 单文件上传
@@ -98,5 +88,23 @@ public class FileUpController {
         return resMap;
     }
 
+    @RequestMapping("download")
+    public ResponseEntity<byte[]> downloadSingleFile(HttpServletRequest request) throws IOException {
+        //1.得到要下载的文件的流
+        String location = "";
+        //找到下载文件的真实路径
+        ServletContext context = request.getServletContext();
+        String realPath = context.getRealPath("/downloadSrc/11.jpg");
+        FileInputStream fis = new FileInputStream(realPath);
+
+        byte[] tmp = new byte[fis.available()];
+        fis.read(tmp);
+        fis.close();
+
+        //2.将要下载的文件返回
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Disposition","attachment;filename="+"11.jpg");
+        return new ResponseEntity<byte[]>(tmp,headers, HttpStatus.OK);
+    }
 
 }

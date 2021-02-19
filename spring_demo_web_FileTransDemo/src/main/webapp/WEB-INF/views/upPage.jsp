@@ -18,5 +18,7 @@
     <input type="submit" value="提交"/>
 </form>
 
+<a href="/web/file/download" >download</a>
+
 </body>
 </html>
